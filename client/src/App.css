@@ -1,0 +1,83 @@
+/* App.css */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  padding: 20px;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #4caf50;
+}
+
+.circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.green {
+  background-color: #4caf50;
+}
+
+.orange {
+  background-color: #ffb74d;
+}
+
+.circle-text h2 {
+  margin: 0;
+  color: white;
+}
+
+.circle-text p {
+  color: white;
+  font-size: 14px;
+}
+
+.side-icons {
+  position: absolute;
+  right: 20px;
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #4caf50;
+}
+
+.add {
+  background-color: #4caf50;
+}
+
+.search {
+  background-color: #4caf50;
+}
