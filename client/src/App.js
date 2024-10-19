@@ -9,7 +9,6 @@ function App() {
         <div className="profile-icon"></div>
       </div>
 
-      {/* Main Circles */}
       <div className="circle-container">
         <div className="circle green">
           <div className="circle-text">
