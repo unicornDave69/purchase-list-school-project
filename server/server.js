@@ -5,9 +5,6 @@ require("./db/connection");
 
 const port = 8000;
 
-app.use(express.json()); // Middleware to parse JSON bodies
-app.use("/shoppingList", shoppingListRoutes); // Use shopping list routes
-
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });

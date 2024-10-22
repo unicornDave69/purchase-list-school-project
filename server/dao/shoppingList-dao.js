@@ -1,6 +1,5 @@
 const ShoppingList = require("../models/ShoppingList");
 
-// Create a new shopping list
 async function createRecord(record) {
   try {
     const newList = new ShoppingList(record);
@@ -10,7 +9,6 @@ async function createRecord(record) {
   }
 }
 
-// Get all shopping lists
 async function getAllRecords() {
   try {
     return await ShoppingList.find({});
@@ -19,7 +17,6 @@ async function getAllRecords() {
   }
 }
 
-// Remove a shopping list by ID
 async function removeById(id) {
   try {
     return await ShoppingList.findByIdAndDelete(id);

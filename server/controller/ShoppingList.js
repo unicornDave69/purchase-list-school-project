@@ -7,7 +7,6 @@ const {
   createRecord,
 } = require("../dao/shoppingList-dao");
 
-// Create a new shopping list
 router.post("/list/create", async (req, res) => {
   try {
     const newList = await createRecord(req.body);
@@ -17,7 +16,6 @@ router.post("/list/create", async (req, res) => {
   }
 });
 
-// Get all shopping lists
 router.get("/list/get", async (req, res) => {
   try {
     const lists = await getAllRecords();
@@ -27,7 +25,6 @@ router.get("/list/get", async (req, res) => {
   }
 });
 
-// Delete a shopping list by ID
 router.delete("/list/delete/:id", async (req, res) => {
   try {
     await removeById(req.params.id);
