@@ -1,31 +1,32 @@
 const Ajv = require("ajv");
 const ajv = new Ajv();
-const { createRecord } = require("../../dao/records-dao.js");
+const { createRecord } = require("../../dao/shoppinglist-dao");
 
 const schema = {
   type: "object",
   properties: {
-    date: { type: "string" },
-    setCalorieBudget: { type: "integer" },
-    consumedCalories: { type: "integer" },
-    burnedCalories: { type: "integer" },
-    result: { type: "integer" },
+    title: { type: "string" },
+    items: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          quantity: { type: "integer" },
+        },
+        required: ["name", "quantity"],
+      },
+    },
   },
-  required: [
-    "date",
-    "setCalorieBudget",
-    "consumedCalories",
-    "burnedCalories",
-    "result",
-  ],
+  required: ["title"],
   additionalProperties: false,
 };
 
 async function CreateAbl(req, res) {
   try {
-    let record = req.body;
-
+    const record = req.body;
     const valid = ajv.validate(schema, record);
+
     if (!valid) {
       res.status(400).json({
         code: "dtoInIsNotValid",
@@ -35,9 +36,8 @@ async function CreateAbl(req, res) {
       return;
     }
 
-    record = createRecord(record);
-
-    res.json(record);
+    const createdRecord = await createRecord(record);
+    res.status(201).json(createdRecord);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

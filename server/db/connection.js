@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://127.0.0.1/WTBBTW", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect("mongodb://127.0.0.1/WTBBTW")
   .then(() => {
     console.log("Connected to MongoDB");
   })

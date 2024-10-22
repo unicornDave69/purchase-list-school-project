@@ -5,7 +5,7 @@ const {
   getAllRecords,
   removeById,
   createRecord,
-} = require("./dao/shoppinglist-dao");
+} = require("../dao/shoppingList-dao");
 
 // Create a new shopping list
 router.post("/list/create", async (req, res) => {
