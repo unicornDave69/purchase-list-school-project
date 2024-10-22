@@ -1,57 +1,35 @@
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
-const recordsFolderPath = path.join(__dirname, "storage", "Records");
+const ShoppingList = require("../models/ShoppingList");
 
-function createRecord(record) {
+// Create a new shopping list
+async function createRecord(record) {
   try {
-    record.id = crypto.randomBytes(16).toString("hex");
-
-    const filePath = path.join(recordsFolderPath, `${record.id}.json`);
-
-    const fileData = JSON.stringify(record);
-
-    fs.writeFileSync(filePath, fileData, "utf8");
-
-    return record;
+    const newList = new ShoppingList(record);
+    return await newList.save();
   } catch (error) {
     throw { code: "failedToCreateRecord", message: error.message };
   }
 }
 
-function removeById(id) {
+// Get all shopping lists
+async function getAllRecords() {
   try {
-    const filePath = path.join(recordsFolderPath, `${id}.json`);
-    fs.unlinkSync(filePath);
-    return {};
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      return {};
-    }
-    throw { code: "failedToRemoveRecord", message: error.message };
-  }
-}
-
-function getAllRecords() {
-  try {
-    const fileData = fs.readdirSync(recordsFolderPath, "utf8");
-    const records = [];
-
-    fileData.forEach((fileName) => {
-      const filePath = path.join(recordsFolderPath, fileName);
-      const recordData = fs.readFileSync(filePath, "utf-8");
-      const record = JSON.parse(recordData);
-      records.push(record);
-    });
-
-    return records;
+    return await ShoppingList.find({});
   } catch (error) {
     throw { code: "failedToReadRecords", message: error.message };
   }
 }
 
+// Remove a shopping list by ID
+async function removeById(id) {
+  try {
+    return await ShoppingList.findByIdAndDelete(id);
+  } catch (error) {
+    throw { code: "failedToRemoveRecord", message: error.message };
+  }
+}
+
 module.exports = {
+  createRecord,
   getAllRecords,
   removeById,
-  createRecord,
 };
