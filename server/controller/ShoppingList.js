@@ -1,20 +1,40 @@
 const express = require("express");
 const router = express.Router();
 
-const getAbl = require("../abl/records/getAbl.js");
-const deleteAbl = require("../abl/records/deleteAbl.js");
-const createAbl = require("../abl/records/createAbl.js");
+const {
+  getAllRecords,
+  removeById,
+  createRecord,
+} = require("./dao/shoppinglist-dao");
 
-router.get("/get", (req, res) => {
-  getAbl(req, res);
+// Create a new shopping list
+router.post("/list/create", async (req, res) => {
+  try {
+    const newList = await createRecord(req.body);
+    res.status(201).json(newList);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.post("/delete", (req, res) => {
-  deleteAbl(req, res);
+// Get all shopping lists
+router.get("/list/get", async (req, res) => {
+  try {
+    const lists = await getAllRecords();
+    res.json(lists);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.post("/create", (req, res) => {
-  createAbl(req, res);
+// Delete a shopping list by ID
+router.delete("/list/delete/:id", async (req, res) => {
+  try {
+    await removeById(req.params.id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 module.exports = router;
