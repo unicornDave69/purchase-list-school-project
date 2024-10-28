@@ -17,7 +17,7 @@ function UserProvider({ children }) {
     },
     user3: {
       id: "u3",
-      name: "Filip",
+      name: "Danny",
     },
     user4: {
       id: "u4",
