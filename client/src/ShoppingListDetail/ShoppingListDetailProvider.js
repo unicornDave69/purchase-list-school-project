@@ -20,66 +20,74 @@ function DetailProvider({ children }) {
     ],
   });
 
+  const updateName = ({ name }) => {
+    setData((current) => ({
+      ...current,
+      name,
+    }));
+  };
+
+  const addItem = () => {
+    setData((current) => ({
+      ...current,
+      itemList: [
+        ...current.itemList,
+        {
+          id: uuidv4(),
+          name: "",
+          amount: 1,
+          resolved: false,
+        },
+      ],
+    }));
+  };
+
+  const updateItemName = ({ id, name }) => {
+    setData((current) => {
+      const itemIndex = current.itemList.findIndex((item) => item.id === id);
+      if (itemIndex !== -1) {
+        const newItemList = [...current.itemList];
+        newItemList[itemIndex] = {
+          ...newItemList[itemIndex],
+          name,
+        };
+        return { ...current, itemList: newItemList };
+      }
+      return current;
+    });
+  };
+
+  const resolveItem = ({ id }) => {
+    setData((current) => {
+      const itemIndex = current.itemList.findIndex((item) => item.id === id);
+      if (itemIndex !== -1) {
+        const newItemList = [...current.itemList];
+        newItemList[itemIndex] = {
+          ...newItemList[itemIndex],
+          resolved: !newItemList[itemIndex].resolved,
+        };
+        return { ...current, itemList: newItemList };
+      }
+      return current;
+    });
+  };
+
+  const deleteItem = ({ id }) => {
+    setData((current) => {
+      const newItemList = current.itemList.filter((item) => item.id !== id);
+      return { ...current, itemList: newItemList };
+    });
+  };
+
+  // Přidání funkcí do handlerMap
   const value = {
     data,
     handlerMap: {
-      updateName: ({ name }) => {
-        setData((current) => ({
-          ...current,
-          name,
-        }));
-      },
-      addItem: () => {
-        setData((current) => ({
-          ...current,
-          itemList: [
-            ...current.itemList,
-            {
-              id: uuidv4(),
-              name: "",
-              amount: 1,
-              resolved: false,
-            },
-          ],
-        }));
-      },
-      updateItemName: ({ id, name }) => {
-        setData((current) => {
-          const itemIndex = current.itemList.findIndex(
-            (item) => item.id === id
-          );
-          if (itemIndex !== -1) {
-            const newItemList = [...current.itemList];
-            newItemList[itemIndex] = {
-              ...newItemList[itemIndex],
-              name,
-            };
-            return { ...current, itemList: newItemList };
-          }
-          return current;
-        });
-      },
-      resolveItem: ({ id }) => {
-        setData((current) => {
-          const itemIndex = current.itemList.findIndex(
-            (item) => item.id === id
-          );
-          current.itemList[itemIndex] = {
-            ...current.itemList[itemIndex],
-            resolved: !current.itemList[itemIndex].resolved,
-          };
-          return { ...current };
-        });
-      },
-      deleteItem: ({ id }) => {
-        setData((current) => {
-          const itemIndex = current.itemList.findIndex(
-            (item) => item.id === id
-          );
-          current.itemList.splice(itemIndex, 1);
-          return { ...current };
-        });
-      },
+      updateName,
+      addItem,
+      updateItemName,
+      resolveItem,
+      deleteItem,
     },
   };
 
