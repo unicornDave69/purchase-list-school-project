@@ -79,7 +79,6 @@ function DetailProvider({ children }) {
     });
   };
 
-  // Přidání funkcí do handlerMap
   const value = {
     data,
     handlerMap: {
